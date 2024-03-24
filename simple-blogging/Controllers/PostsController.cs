@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Web.Models;
 using simple_blogging.Data;
 using Microsoft.AspNetCore.Authorization;
-using SQLitePCL;
 using simple_blogging.DTO;
 using Microsoft.AspNetCore.Identity;
 
@@ -27,12 +22,31 @@ namespace simple_blogging.Controllers
         }
 
         // GET: Posts
+        /// <summary>
+        /// Retrieves a specific product by unique id
+        /// </summary>
+        /// <remarks>Awesomeness!</remarks>
+        /// <response code="404">Product not found</response>
+        /// <response code="500">Oops! Can't lookup your product right now</response>
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Post.ToListAsync());
         }
 
         // GET: Posts/Details/5
+        /// <summary>
+        /// Retrieves a specific product by unique id
+        /// </summary>
+        /// <remarks>Awesomeness!</remarks>
+        /// <param name="id" example="5">The post id</param>
+        /// <response code="200">Product retrieved</response>
+        /// <response code="404">Product not found</response>
+        /// <response code="500">Oops! Can't lookup your product right now</response>
+        [HttpGet("{id}")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
